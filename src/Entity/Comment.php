@@ -69,7 +69,7 @@ class Comment
         return $this->article;
     }
 
-    public function setArticle(string $article): self
+    public function setArticle($article): self
     {
         $this->article = $article;
 
