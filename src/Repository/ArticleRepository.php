@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -25,6 +26,10 @@ class ArticleRepository extends ServiceEntityRepository
      */
     public function findAllPublishedOrderedByNewest()
     {
+        // reusing criteria
+//        $this->createQueryBuilder('a')
+//            ->addCriteria(self::createNonDeleteCriteria());
+
         return $this->addIsPublishedQueryBuilder()
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
@@ -32,17 +37,13 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
-    public function findOneBySomeField($value): ?Article
+    public static function createNonDeleteCriteria(): Criteria
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isDeleted', false))
+            ->orderBy(['createdAt' => 'DESC'])
+            ;
     }
-    */
 
     private function addIsPublishedQueryBuilder(QueryBuilder $qb = null)
     {

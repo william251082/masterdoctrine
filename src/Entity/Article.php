@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -184,7 +185,14 @@ class Article
      */
     public function getNonDeletedComments(): Collection
     {
-        return $this->comments;
+        // it's static because entities don't have access to services
+        $criteria = ArticleRepository::createNonDeleteCriteria();
+//        $criteria = Criteria::create()
+//            ->andWhere(Criteria::expr()->eq('isDeleted', false))
+//            ->orderBy(['createdAt' => 'DESC'])
+//            ;
+        // $comments acts like an array but it's an object that has usable properties
+        return $this->comments->matching($criteria);
     }
 
     /**
