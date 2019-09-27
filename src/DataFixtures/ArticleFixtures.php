@@ -70,6 +70,9 @@ EOF
             $comment2->setContent('2nd Hard coded comment');
             $comment2->setArticle($article);
             $manager->persist($comment2);
+
+//            $article->addComment($comment1);
+//            $article->addComment($comment2);
         });
 
         $manager->flush();

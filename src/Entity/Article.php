@@ -186,6 +186,7 @@ class Article
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
+            // synchronize the data to the other side of the relationship
             $comment->setArticle($this);
         }
 

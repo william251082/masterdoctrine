@@ -44,17 +44,6 @@ class ArticleController extends AbstractController
             $slack->sendMessage('Kahn', 'Ah, Kirk, my old friend...');
         }
 
-//        $comments = $commentRepository->findBy(['article' => $article]);
-//        dd($comments);
-
-        // PersistentCollection object looks and acts like an array
-//        $comments = $article->getComments();
-//        dd($comments);
-//        foreach ($comments as $comment) {
-//            dump($comment);
-//        }
-//        die();
-
         return $this->render('article/show.html.twig', [
             'article' => $article
         ]);
