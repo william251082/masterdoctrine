@@ -13,6 +13,27 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    /**
+     * @param null|string $term
+     * @return Comment[]
+     */
+    public function findAllWithSearch(?string $term)
+    {
+        $qb = $this->createQueryBuilder('comment');
+
+        if ($term) {
+            // careful with using orWhere
+            $qb->andWhere('comment.content LIKE :term OR comment.authorName LIKE :term')
+                ->setParameter('term', '%'.$term.'%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('comment.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findBySomething($value)
     {
