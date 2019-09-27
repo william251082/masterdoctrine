@@ -59,7 +59,7 @@ class Article
     private $imageFilename;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article")
      */
     private $comments;
 
