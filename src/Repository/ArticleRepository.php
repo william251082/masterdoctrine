@@ -26,7 +26,13 @@ class ArticleRepository extends ServiceEntityRepository
      */
     public function findAllPublishedOrderedByNewest()
     {
+        // If there's something that has to be added on the join table(article_tag), don't use ManyToMany
+        // Instead create an Entity ArticleTag that each has a ManyToOne to article and tag
         return $this->addIsPublishedQueryBuilder()
+            // a.tags refers to the tags property in article
+            // because of ManyToMany, doctrine already knows how to join all the way over to the tag
+            ->leftJoin('a.tags','t')
+            ->addSelect('t')
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
             ->getResult()
