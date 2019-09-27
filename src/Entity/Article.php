@@ -180,6 +180,14 @@ class Article
     }
 
     /**
+     * @return Collection|Comment[]
+     */
+    public function getNonDeletedComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    /**
      * @param Comment $comment
      * @return Article
      */
