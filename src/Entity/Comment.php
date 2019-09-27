@@ -69,7 +69,7 @@ class Comment
         return $this;
     }
 
-    public function getArticle(): string
+    public function getArticle(): ?Article
     {
         return $this->article;
     }
